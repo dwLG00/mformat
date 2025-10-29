@@ -40,7 +40,9 @@ class SandboxEnvironment:
         }
 
         self.prompt = "__SBX__$ "
+        self.shell.expect_exact(self.prompt)
         self.shell.sendline(f'export PS1="{self.prompt}"')
+        self.shell.expect_exact(self.prompt)
         self.shell.sendline("bind 'set enable-bracketed-paste off' || true")
         self.shell.expect_exact(self.prompt)
 
