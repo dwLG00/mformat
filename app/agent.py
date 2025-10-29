@@ -37,7 +37,7 @@ class MangaFormatAgent:
                 tool_call_response = {
                     "role": "tool",
                     "tool_call_id": tool_call_id,
-                    "output": tool_call_output
+                    "content": tool_call_output
                 }
                 if print_responses: print(f'[!] response: {tool_call_response}')
                 self.memory.append(tool_call_response)
