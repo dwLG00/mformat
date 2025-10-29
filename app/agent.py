@@ -18,7 +18,7 @@ class MangaFormatAgent:
             {"role": "user", "content": text}
         ]
         response = self.client.chat.completions.create(
-            "gpt-5-nano-2025-08-07",
+            model="gpt-5-nano-2025-08-07",
             messages=messages,
             tools=self.sandbox_env.as_tools()
         )
