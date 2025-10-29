@@ -76,8 +76,12 @@ class SandboxEnvironment:
     
     def unar(self, filename: str) -> str:
         "Extracts given tarball"
-        return self._run(f"unar {filename}")
-    
+        # return string is potentially huge so cut it off
+        return_string = self._run(f"unar {filename}")
+        if len(return_string) > 2000:
+            return return_string[:1000] + "..." + return_string[-1000:]
+        return return_string
+
     def cp(self, string: str) -> str:
         """Copies files/directories to another location.
         This is equivalent to running `cp {string}`.
