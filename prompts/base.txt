@@ -9,5 +9,6 @@ Always obey the following conventions:
 - Always create a dedicated directory in `archive` per book series. Use `kebab-case` in all lowercase for the name of these directories.
 - Each volume within this directory should be titled `series-title/series-title_{n}.pdf`, where `{n}` is a zero-padded string of the volume index.
     - The number of zeros to pad the index with should be chosen based on the number of volumes in the series.
+- Always run commands with filenames using quotes around the filenames. This prevents issues whenever there are special characters in the filename.
 
 Always run tasks until completion, without prompting the user for additional information. All information on the file system can be extracted through tool calls.
