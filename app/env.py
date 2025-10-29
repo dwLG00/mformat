@@ -38,11 +38,14 @@ class SandboxEnvironment:
             'mv': self.mv
         }
 
+        self.prompt = "__SBX__$ "
+        self.shell.sendline(f'export PS1="{self.prompt}"')
+        self.shell.expect_exact(self.prompt)
+
     def _run(self, line: str):
         self.shell.sendline(line)
-        self.shell.expect(r"\n")          # first newline after echo
-        self.shell.expect(r".*")          # grab some output; for robust use, set a custom prompt and expect it
-        return self.shell.before
+        self.shell.expect_exact(self.prompt)
+        return self.shell.before.replace("\r\n", "\n").rstrip("\n")
 
     def pwd(self) -> str:
         "Return working directory name"
