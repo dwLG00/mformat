@@ -10,4 +10,4 @@ if __name__ == "__main__":
 
     agent = MangaFormatAgent(system_prompt=system_prompt)
     text = input("> ")
-    agent.orchestrate(text)
+    agent.orchestrate(text, print_responses=True)
