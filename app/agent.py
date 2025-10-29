@@ -24,6 +24,7 @@ class MangaFormatAgent:
             tools=self.sandbox_env.as_tools()
         )
         rmessage = response.choices[0].message
+        self.memory.append(rmessage)
         tool_calls = rmessage.tool_calls
         while tool_calls:
             if print_responses and rmessage.content: print(rmessage.content)
@@ -45,4 +46,5 @@ class MangaFormatAgent:
                 tools=self.sandbox_env.as_tools()
             )
             rmessage = response.choices[0].message
+            self.memory.append(rmessage)
             tool_calls = rmessage.tool_calls
