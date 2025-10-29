@@ -19,7 +19,7 @@ class MangaFormatAgent:
             {"role": "user", "content": text}
         ]
         response = self.client.chat.completions.create(
-            model="gpt-5-nano-2025-08-07",
+            model=settings.model_code,
             messages=self.memory,
             tools=self.sandbox_env.as_tools()
         )
@@ -42,7 +42,7 @@ class MangaFormatAgent:
                 if print_responses: print(f'[!] response: {tool_call_response}')
                 self.memory.append(tool_call_response)
             response = self.client.chat.completions.create(
-                model="gpt-5-nano-2025-08-07",
+                model=settings.model_code,
                 messages=self.memory,
                 tools=self.sandbox_env.as_tools()
             )

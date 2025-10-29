@@ -5,7 +5,6 @@ class Settings(BaseSettings):
     openai_key: str
     download_dir: str
     archive_dir: str
-
-
+    model_code: str = "gpt-5-nano-2025-08-07"
 
 settings = Settings()
