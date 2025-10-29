@@ -28,6 +28,16 @@ class SandboxEnvironment:
         )
         self.shell = pexpect.spawn(cmd, encoding="utf-8", timeout=10)
 
+        self.tools = {
+            'pwd': self.pwd,
+            'ls': self.ls,
+            'cd': self.cd,
+            'convert': self.convert,
+            'unar': self.unar,
+            'cp': self.cp,
+            'mv': self.mv
+        }
+
     def _run(self, line: str):
         self.shell.sendline(line)
         self.shell.expect(r"\n")          # first newline after echo
@@ -72,7 +82,16 @@ class SandboxEnvironment:
         """
         return self._run(f"mv {string}")
     
+    def run_tool(self, tool_name: str, tool_args: dict) -> str:
+        tool_func = self.tools.get('tool_name')
+        if not tool_func:
+            raise ValueError(f"Got tool call for `{tool_name}`, but not present in list of tools")
+        
+        response = tool_func(**tool_args)
+        return str(response)
+
     def as_tools(self) -> list:
+        '''Return list of "tools" for openai API'''
         def function_to_signature(func):
             sig = inspect.signature(func)
             hints = get_type_hints(func)
@@ -102,15 +121,7 @@ class SandboxEnvironment:
                 }
             }
         
-        return [function_to_signature(func) for func in (
-            self.pwd,
-            self.ls,
-            self.cd,
-            self.convert,
-            self.unar,
-            self.cp,
-            self.mv
-        )]
+        return [function_to_signature(func) for func in self.tools.values()]
 
         
 def recursive_schema(param_type: Any) -> dict:    
