@@ -1,10 +1,9 @@
 import pexpect
 import inspect
 import platform
-from pathlib import Path
 from typing import get_type_hints, Any, Union, get_origin, get_args
 from pydantic import BaseModel
-from config import settings
+import os
 
 class SandboxEnvironment:
     def __init__(self, download_dir: str, archive_dir: str):
@@ -26,7 +25,9 @@ class SandboxEnvironment:
             f"--chdir /download "
             f"/bin/bash --noprofile --norc -i"
         )
-        self.shell = pexpect.spawn(cmd, encoding="utf-8", timeout=10)
+        env = os.environ.copy()
+        env.setdefault("TERM", "dumb")  # avoids many readline escapes
+        self.shell = pexpect.spawn(cmd, encoding="utf-8", env=env)
 
         self.tools = {
             'pwd': self.pwd,
@@ -40,6 +41,7 @@ class SandboxEnvironment:
 
         self.prompt = "__SBX__$ "
         self.shell.sendline(f'export PS1="{self.prompt}"')
+        self.shell.sendline("bind 'set enable-bracketed-paste off' || true")
         self.shell.expect_exact(self.prompt)
 
     def _run(self, line: str):
