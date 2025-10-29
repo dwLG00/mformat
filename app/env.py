@@ -83,7 +83,7 @@ class SandboxEnvironment:
         return self._run(f"mv {string}")
     
     def run_tool(self, tool_name: str, tool_args: dict) -> str:
-        tool_func = self.tools.get('tool_name')
+        tool_func = self.tools.get(tool_name)
         if not tool_func:
             raise ValueError(f"Got tool call for `{tool_name}`, but not present in list of tools")
         
