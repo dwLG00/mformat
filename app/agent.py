@@ -23,9 +23,11 @@ class MangaFormatAgent:
             messages=self.memory,
             tools=self.sandbox_env.as_tools()
         )
-        tool_calls = response.choices[0].tool_calls
+        tool_calls = response.choices[0].message.tool_calls
         while tool_calls:
-            if print_responses: print(response.choices)
+            if print_responses: 
+                if response_message := response.choices[0].message.content:
+                    print(response_message)
             for tool_call in tool_calls:
                 tool_call_id = tool_call.id
                 function_name = tool_call.function.name
