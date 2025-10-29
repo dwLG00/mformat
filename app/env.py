@@ -28,7 +28,7 @@ class SandboxEnvironment:
         )
         env = os.environ.copy()
         env.setdefault("TERM", "dumb")  # avoids many readline escapes
-        self.shell = pexpect.spawn(cmd, encoding="utf-8", env=env)
+        self.shell = pexpect.spawn(cmd, encoding="utf-8", env=env, timeout=None)
 
         self.tools = {
             'pwd': self.pwd,
@@ -49,7 +49,7 @@ class SandboxEnvironment:
 
     def _run(self, line: str):
         self.shell.sendline(line)
-        self.shell.expect_exact(self.prompt)
+        self.shell.expect_exact(self.prompt, timeout=None)
         return self.shell.before.replace("\r\n", "\n").rstrip("\n")
 
     def pwd(self) -> str:
