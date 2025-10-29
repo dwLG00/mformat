@@ -50,7 +50,7 @@ class SandboxEnvironment:
     def _run(self, line: str):
         self.shell.sendline(line)
         self.shell.expect_exact(self.prompt, timeout=None)
-        return self.shell.before.replace("\r\n", "\n").rstrip("\n")
+        return self.shell.before.rstrip("\n")
 
     def pwd(self) -> str:
         "Return working directory name"
@@ -59,8 +59,8 @@ class SandboxEnvironment:
     def ls(self, dir: str = None) -> str:
         "Return contents of given directory (default: working directory)"
         if dir:
-            return self._run(f"ls -lagh {dir}")
-        return self._run("ls -lagh")
+            return self._run(f"ls {dir}")
+        return self._run("ls")
     
     def cd(self, dir: str) -> str:
         "Change working directory to given directory"
