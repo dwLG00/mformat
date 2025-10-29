@@ -39,6 +39,7 @@ class MangaFormatAgent:
                     "tool_call_id": tool_call_id,
                     "output": tool_call_output
                 }
+                if print_responses: print(f'[!] response: {tool_call_response}')
                 self.memory.append(tool_call_response)
             response = self.client.chat.completions.create(
                 model="gpt-5-nano-2025-08-07",
