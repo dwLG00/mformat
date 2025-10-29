@@ -23,7 +23,7 @@ class SandboxEnvironment:
             f"--tmpfs /tmp "
             f"--bind {self.download_dir} /download "
             f"--bind {self.archive_dir} /archive "
-            f"--chdir /work "
+            f"--chdir /download "
             f"/bin/bash --noprofile --norc -i"
         )
         self.shell = pexpect.spawn(cmd, encoding="utf-8", timeout=10)
