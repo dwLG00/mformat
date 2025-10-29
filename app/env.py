@@ -44,6 +44,7 @@ class SandboxEnvironment:
         self.shell.expect_exact(self.prompt)
         self.shell.sendline("bind 'set enable-bracketed-paste off' || true")
         self.shell.expect_exact(self.prompt)
+        self.shell.expect_exact(self.prompt)
 
     def _run(self, line: str):
         self.shell.sendline(line)
