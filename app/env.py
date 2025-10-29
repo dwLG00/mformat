@@ -13,6 +13,7 @@ class SandboxEnvironment:
         cmd = (
             f"bwrap "
             f"--unshare-pid --unshare-uts --unshare-ipc --unshare-net "
+            f"--proc /proc "
             f"--dev-bind /dev /dev "
             f"--ro-bind /usr /usr "
             f"--ro-bind /bin /bin "
