@@ -87,7 +87,7 @@ class SandboxEnvironment:
         if not tool_func:
             raise ValueError(f"Got tool call for `{tool_name}`, but not present in list of tools")
         
-        response = tool_func(self, **tool_args)
+        response = tool_func(**tool_args)
         return str(response)
 
     def as_tools(self) -> list:
